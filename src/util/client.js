@@ -22,14 +22,15 @@ const toArray = (value) => {
   return [value]
 }
 
+const format = ({ type, code, text, object }) => `${code}: ${text} [${type}]${object ? ` (${JSON.stringify(object)})` : ''}`
+
 const singleResult = ({ status, msg, data }) => {
-  toArray(msg).forEach(({ type, code, text }) => {
-    const fn = type === 'error' ? 'error' : 'log'
-    console[fn](`${code}: ${text} [${type}]`) // eslint-disable-line no-console
+  toArray(msg).forEach((m) => {
+    const fn = m.type === 'error' ? 'error' : 'log'
+    console[fn](format(m)) // eslint-disable-line no-console
   })
-  const { type, code, text } = status
-  if (type === 'error') {
-    throw new Error(`${code}: ${text}`)
+  if (status.type === 'error') {
+    throw new Error(format(status))
   }
   return data
 }
@@ -47,8 +48,10 @@ export default async (task) => {
       task,
     },
   }, options)
+  console.log(xml)
   const httpResponse = await request.post('https://gateway.autodns.com/').type('xml').send(xml)
   if (!httpResponse.ok) throw new Error(`Status: ${httpResponse.status}`)
+  console.log(httpResponse.text)
   const { response } = xml2js(httpResponse.text, options)
   const { result } = inlineText(response)
   return _result(result)
