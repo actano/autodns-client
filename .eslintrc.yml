@@ -1,0 +1,18 @@
+root: true
+extends: actano-base
+
+parser: babel-eslint
+
+settings:
+  import/resolver:
+    node:
+      extensions:
+      - .js
+      - .jsx
+      - .json
+
+overrides:
+- files:
+  - '**/test/**'
+  env:
+    mocha: true
