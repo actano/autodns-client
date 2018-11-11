@@ -1,6 +1,7 @@
 import request from 'superagent'
 import { js2xml, xml2js } from 'xml-js'
 import inlineText from './inline-text'
+import toArray from './to-array'
 
 const { AUTODNS_USER, AUTODNS_PASSWORD, AUTODNS_CONTEXT } = process.env
 const _auth = (user, password, context) => ({ user, password, context })
@@ -15,12 +16,6 @@ const _declaration = {
 
 const options = { compact: true }
 
-
-const toArray = (value) => {
-  if (Array.isArray(value)) return value
-  if (value === null || typeof value === 'undefined') return []
-  return [value]
-}
 
 const format = ({ type, code, text, object }) => `${code}: ${text} [${type}]${object ? ` (${JSON.stringify(object)})` : ''}`
 

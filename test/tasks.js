@@ -1,6 +1,7 @@
 import { randomBytes } from 'crypto'
 /* eslint-disable no-console */
 import {
+  addResourceRecord,
   removeResourceRecord,
   resourceRecord,
   zone,
@@ -8,7 +9,7 @@ import {
   zoneList,
   zoneUpdateBulk
 } from '../src'
-import { addResourceRecord } from '../src/zone-update'
+import toArray from '../src/util/to-array'
 
 const { AUTODNS_ZONE } = process.env
 
@@ -27,7 +28,7 @@ describe('zoneInfo', () => {
     const { rr } = _zone
     if (rr) {
       console.log(rr)
-      const newValues = rr
+      const newValues = toArray(rr)
         .filter(({ name, type }) => name === '_acme-challenge' && type === 'TXT')
         .map(({ value }) => value)
       values.push(...newValues)
@@ -40,12 +41,12 @@ describe('zoneUpdate', () => {
 
   it('should add TXT record', async () => {
     const items = addResourceRecord(resourceRecord('_acme-challenge', 'TXT', newValue))()
-    await zoneUpdateBulk(items, zone(AUTODNS_ZONE, 'a.ns14.net'))
+    await zoneUpdateBulk(items, zone(AUTODNS_ZONE))
     values.push(newValue)
   })
 
   it('should remove TXT record', async () => {
     const items = values.map(value => removeResourceRecord(resourceRecord('_acme-challenge', 'TXT', value))).reduce((v, fn) => fn(v))
-    await zoneUpdateBulk(items, zone(AUTODNS_ZONE, 'a.ns14.net'))
+    await zoneUpdateBulk(items, zone(AUTODNS_ZONE))
   })
 })
