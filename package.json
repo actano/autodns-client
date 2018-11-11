@@ -11,7 +11,8 @@
     "test": "mocha",
     "lint": "eslint src test",
     "clean": "rm -rf lib coverage .nyc_output coverage.lcov",
-    "coverage": "nyc --reporter=text mocha"
+    "coverage": "nyc --reporter=text mocha",
+    "start": "babel-node src/cli"
   },
   "devDependencies": {
     "@babel/cli": "^7.1.5",
@@ -29,6 +30,7 @@
     "nyc": "^13.1.0"
   },
   "dependencies": {
+    "commander": "^2.19.0",
     "superagent": "^4.0.0-beta.5",
     "xml-js": "^1.6.8"
   }
