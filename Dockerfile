@@ -6,4 +6,4 @@ RUN yarn install --frozen-lockfile
 COPY index.js ./
 COPY src ./src
 RUN yarn build
-ENTRYPOINT yarn start
+ENTRYPOINT ["yarn", "start"]
