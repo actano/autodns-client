@@ -16,8 +16,9 @@ const _declaration = {
 
 const options = { compact: true }
 
-
-const format = ({ type, code, text, object }) => `${code}: ${text} [${type}]${object ? ` (${JSON.stringify(object)})` : ''}`
+const format = ({
+  type, code, text, object,
+}) => `${code}: ${text} [${type}]${object ? ` (${JSON.stringify(object)})` : ''}`
 
 const singleResult = ({ status, msg, data }) => {
   toArray(msg).forEach((m) => {
@@ -43,10 +44,8 @@ export default async (task) => {
       task,
     },
   }, options)
-  // console.log(xml)
   const httpResponse = await request.post('https://gateway.autodns.com/').type('xml').send(xml)
   if (!httpResponse.ok) throw new Error(`Status: ${httpResponse.status}`)
-  // console.log(httpResponse.text)
   const { response } = xml2js(httpResponse.text, options)
   const { result } = inlineText(response)
   return _result(result)

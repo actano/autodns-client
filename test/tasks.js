@@ -7,7 +7,7 @@ import {
   zone,
   zoneInfo,
   zoneList,
-  zoneUpdateBulk
+  zoneUpdateBulk,
 } from '../src'
 import toArray from '../src/util/to-array'
 

@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 import program from 'commander'
 import { zone as _zone } from '../zone'
 import { addResourceRecord, removeResourceRecord, zoneUpdateBulk } from '../zone-update'

@@ -16,11 +16,15 @@ describe('resource record regular expression', () => {
 
   it('should parse "name ttl type value"', () => {
     const result = rr(`${name} ${ttl} ${type} ${value}`)
-    expect(result).to.deep.equal({ name, ttl, type, value })
+    expect(result).to.deep.equal({
+      name, ttl, type, value,
+    })
   })
 
   it('should parse "name ttl type pref value"', () => {
     const result = rr(`${name} ${ttl} ${type} ${pref} ${value}`)
-    expect(result).to.deep.equal({ name, ttl, type, pref, value })
+    expect(result).to.deep.equal({
+      name, ttl, type, pref, value,
+    })
   })
 })
